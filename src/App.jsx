@@ -48,6 +48,79 @@ const App = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const el = document.getElementById('typed-role');
+    if (!el) return;
+
+    const roles = [
+      'Full-Stack / Backend Software Engineer',
+      'Realtime Systems Enthusiast',
+      'API & Infrastructure Builder',
+      'Open-Source Contributor'
+    ];
+
+    let mounted = true;
+    let roleIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+
+    const typingSpeed = 60;
+    const deletingSpeed = 30;
+    const pause = 1400;
+
+    const tick = () => {
+      if (!mounted) return;
+      const current = roles[roleIndex];
+      if (!deleting) {
+        el.textContent = current.slice(0, charIndex + 1);
+        charIndex += 1;
+        if (charIndex === current.length) {
+          deleting = true;
+          setTimeout(tick, pause);
+          return;
+        }
+        setTimeout(tick, typingSpeed);
+      } else {
+        el.textContent = current.slice(0, charIndex - 1);
+        charIndex -= 1;
+        if (charIndex === 0) {
+          deleting = false;
+          roleIndex = (roleIndex + 1) % roles.length;
+          setTimeout(tick, 300);
+          return;
+        }
+        setTimeout(tick, deletingSpeed);
+      }
+    };
+
+    const startTimer = setTimeout(tick, 300);
+
+    return () => {
+      mounted = false;
+      clearTimeout(startTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    const skillsSection = document.getElementById('skills');
+    if (!skillsSection) return;
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          document.querySelectorAll('.bar-fill').forEach(el => {
+            const level = el.getAttribute('data-level') || '0';
+            el.style.width = `${level}%`;
+          });
+          obs.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+
+    obs.observe(skillsSection);
+    return () => obs.disconnect();
+  }, []);
+
   return (
     <div className="portfolio">
       <nav className="navbar">
@@ -67,7 +140,7 @@ const App = () => {
         <div className="container">
           <div className="hero-content">
             <h1 className="name">Pranav Dalvi</h1>
-            <h2 className="title">Full-Stack / Backend Software Engineer</h2>
+            <h2 className="title"><span id="typed-role" aria-live="polite"></span><span id="role-cursor" className="cursor">_</span></h2>
             <p className="summary">
               Software Engineer experienced in building REST APIs, real-time dashboards, and data-driven web applications using Node.js, MongoDB, React, and Next.js.
             </p>
@@ -139,29 +212,55 @@ const App = () => {
           <div className="skills-container">
             <div className="skill-group reveal stagger-1">
               <h4>Languages & Frontend</h4>
-              <div className="badges">
-                <span className="badge active">JavaScript</span>
-                <span className="badge active">Python</span>
-                <span className="badge active">React.js</span>
-                <span className="badge active">Next.js</span>
+              <div className="skill-bars">
+                <div className="skill">
+                  <div className="skill-meta"><span>JavaScript</span><span>90%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="90"></div></div>
+                </div>
+                <div className="skill">
+                  <div className="skill-meta"><span>React.js</span><span>85%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="85"></div></div>
+                </div>
+                <div className="skill">
+                  <div className="skill-meta"><span>Next.js</span><span>75%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="75"></div></div>
+                </div>
               </div>
             </div>
+
             <div className="skill-group reveal stagger-2">
               <h4>Backend & Database</h4>
-              <div className="badges">
-                <span className="badge active">Node.js</span>
-                <span className="badge active">Express.js</span>
-                <span className="badge active">MongoDB</span>
-                <span className="badge active">MySQL</span>
+              <div className="skill-bars">
+                <div className="skill">
+                  <div className="skill-meta"><span>Node.js</span><span>88%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="88"></div></div>
+                </div>
+                <div className="skill">
+                  <div className="skill-meta"><span>Express.js</span><span>82%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="82"></div></div>
+                </div>
+                <div className="skill">
+                  <div className="skill-meta"><span>MongoDB</span><span>78%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="78"></div></div>
+                </div>
               </div>
             </div>
+
             <div className="skill-group reveal stagger-3">
               <h4>Tools & Cloud</h4>
-              <div className="badges">
-                <span className="badge active">AWS EC2</span>
-                <span className="badge active">NGINX</span>
-                <span className="badge active">Docker</span>
-                <span className="badge active">Linux</span>
+              <div className="skill-bars">
+                <div className="skill">
+                  <div className="skill-meta"><span>AWS EC2</span><span>80%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="80"></div></div>
+                </div>
+                <div className="skill">
+                  <div className="skill-meta"><span>Docker</span><span>78%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="78"></div></div>
+                </div>
+                <div className="skill">
+                  <div className="skill-meta"><span>NGINX</span><span>70%</span></div>
+                  <div className="bar"><div className="bar-fill" data-level="70"></div></div>
+                </div>
               </div>
             </div>
           </div>
