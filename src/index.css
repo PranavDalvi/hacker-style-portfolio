@@ -84,6 +84,7 @@ section {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
 }
 
 .logo {
@@ -250,7 +251,7 @@ section {
 /* Projects */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
@@ -346,20 +347,130 @@ footer {
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
+  html {
+    scroll-padding-top: 110px;
+  }
+
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  section {
+    padding: 4rem 0;
+  }
+
+  .navbar {
+    padding: 0.85rem 0;
+  }
+
+  .nav-content {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+
+  .nav-links a {
+    margin-left: 0;
+  }
+
   .name {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
   }
+
   .hero {
-    padding-top: 8rem;
+    padding-top: 9rem;
+    padding-bottom: 4rem;
   }
+
+  .title {
+    font-size: 1.2rem;
+  }
+
+  .summary {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .hero-links .btn {
+    margin-right: 0;
+    text-align: center;
+    padding: 0.75rem 1rem;
+  }
+
   .section-title {
     font-size: 1.5rem;
+    margin-bottom: 2rem;
   }
+
   .card {
     padding: 1.5rem;
   }
+
   .card-header {
     flex-direction: column;
     gap: 0.5rem;
+    align-items: stretch;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .skill-meta {
+    font-size: 0.85rem;
+    gap: 0.75rem;
+  }
+
+  .details li {
+    padding-left: 1.25rem;
+  }
+
+  footer {
+    padding: 3rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.75rem 0;
+  }
+
+  .nav-links {
+    gap: 0.5rem 0.75rem;
+  }
+
+  .name {
+    font-size: 2.3rem;
+  }
+
+  .title {
+    font-size: 1rem;
+  }
+
+  .hero-links {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+
+  .badge {
+    margin-right: 0.4rem;
+  }
+
+  .skill-meta {
+    font-size: 0.8rem;
   }
 }
